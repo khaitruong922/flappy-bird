@@ -6,15 +6,15 @@ public class Bird : MonoBehaviour
     private Rigidbody2D rb;
     [SerializeField]
     private float flapHeight;
-    private bool inputJumpDown;
-    private Vector3 startPosition;
+    [SerializeField]
+    private AudioSource flap, score, hit;
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
+
     }
     private void Start()
     {
-        startPosition = transform.position;
+        rb = GetComponent<Rigidbody2D>();
     }
     private void FixedUpdate()
     {
@@ -22,9 +22,15 @@ public class Bird : MonoBehaviour
     }
     private void Update()
     {
+        if (GameManager.Instance.IsGamePaused)
+        {
+            return;
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
             rb.velocity = new Vector2(rb.velocity.x, flapHeight);
+            flap.Play();
 
         }
         if (rb.velocity.y >= 0)
@@ -38,10 +44,12 @@ public class Bird : MonoBehaviour
     }
     public void Die()
     {
-        GameManager.Instance.StopGame();
+        GameManager.Instance.End();
+        hit.Play();
     }
     private void OnTriggerExit2D(Collider2D other)
     {
         GameManager.Instance.AddScore();
+        score.Play();
     }
 }

@@ -6,37 +6,40 @@ public class PipeManager : MonoBehaviour
     [SerializeField]
     private float moveSpeed;
     [SerializeField]
+    private float difficulty;
+    [SerializeField]
     private Transform[] pipes;
     [SerializeField]
-    private Transform resetPoint;
-    [SerializeField]
     private Transform[] grounds;
+
     [SerializeField]
-    private Transform skyBounds;
-    private Vector3 lastPipePosition;
-    private Vector3 lastGroundPosition;
-    private void Start(){
-        lastPipePosition=pipes[pipes.Length-1].transform.position;
-        lastGroundPosition=grounds[grounds.Length-1].transform.position;
+    private Transform pipeStart, pipeEnd, groundStart, groundEnd;
+    private void Start()
+    {
+        for (int i = 0; i < pipes.Length; i++)
+        {
+            pipes[i].transform.position += new Vector3(0, Random.Range(-difficulty, difficulty));
+        }
     }
     private void Update()
     {
-        foreach (Transform p in pipes)
+        for (int i = 0; i < pipes.Length; i++)
         {
-            p.Translate(-moveSpeed * Time.deltaTime, 0, 0);
-            if(p.transform.position.x <= resetPoint.transform.position.x)
+            pipes[i].Translate(-moveSpeed * Time.deltaTime, 0, 0);
+
+            if (pipes[i].transform.position.x <= pipeEnd.position.x)
             {
-                p.transform.position = lastPipePosition;
+                pipes[i].transform.position = pipeStart.position + new Vector3(0, Random.Range(-difficulty, difficulty), 0);
             }
         }
-        foreach (Transform g in grounds)
+        for (int i = 0; i < grounds.Length; i++)
         {
-            g.Translate(-moveSpeed * Time.deltaTime, 0, 0);
-            if(g.transform.position.x <= resetPoint.transform.position.x)
+            grounds[i].Translate(-moveSpeed * Time.deltaTime, 0, 0);
+
+            if (grounds[i].transform.position.x <= groundEnd.position.x)
             {
-                g.transform.position = lastGroundPosition;
+                grounds[i].transform.position = groundStart.position;
             }
         }
-        
     }
 }
