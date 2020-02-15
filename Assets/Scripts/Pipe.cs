@@ -3,10 +3,12 @@ using UnityEngine;
 
 public class Pipe : MonoBehaviour
 {
-    [SerializeField]
-    private float moveSpeed;
-    private void Update()
+    private void OnCollisionEnter2D(Collision2D other)
     {
-        transform.Translate(-moveSpeed * Time.deltaTime, 0, 0);
+        Bird bird = other.gameObject.GetComponent<Bird>();
+        if(bird!= null)
+        {
+            bird.Die();
+        }
     }
 }

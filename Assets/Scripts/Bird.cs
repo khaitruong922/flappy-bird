@@ -36,16 +36,16 @@ public class Bird : MonoBehaviour
             rb.rotation = -30f;
         }
     }
-    private void OnTriggerEnter2D(Collider2D other)
+    public void Die()
     {
-        IScoreAdder scoreAdder = other.GetComponent<IScoreAdder>();
-        if (scoreAdder != null)
+        GameManager.Instance.StopGame();
+    }
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        Pipe pipe = other.GetComponent<Pipe>();
+        if(pipe!=null)
         {
-            scoreAdder.AddScore();
-        }
-        else
-        {
-            GameManager.Instance.StopGame();
+            GameManager.Instance.AddScore();
         }
     }
 }
