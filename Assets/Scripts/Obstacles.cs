@@ -1,7 +1,7 @@
 ﻿#pragma warning disable 0649
 using UnityEngine;
 
-public class Pipe : MonoBehaviour
+public class Obstacles : MonoBehaviour
 {
     private void OnCollisionEnter2D(Collision2D other)
     {

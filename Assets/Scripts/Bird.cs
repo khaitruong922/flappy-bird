@@ -42,10 +42,6 @@ public class Bird : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D other)
     {
-        Pipe pipe = other.GetComponent<Pipe>();
-        if(pipe!=null)
-        {
-            GameManager.Instance.AddScore();
-        }
+        GameManager.Instance.AddScore();
     }
 }
